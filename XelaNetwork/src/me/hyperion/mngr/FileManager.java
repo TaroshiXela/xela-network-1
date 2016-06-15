@@ -1,4 +1,4 @@
-package me.hyperion;
+package me.hyperion.mngr;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class FileManager extends JavaPlugin{
+	
 	public void initFileManager()
 	{
 		File configFolder = new File(getDataFolder(),"config.yml");
@@ -37,23 +38,10 @@ public class FileManager extends JavaPlugin{
 		
 		return true;
 	}
-	public boolean setScore(Player player,Integer score)
+	public File getFile(Player player)
 	{
-		File PlayerFile = new File(getDataFolder()+File.separator+player.getUniqueId()+".yml");
-		try {
-			FileConfiguration config = YamlConfiguration.loadConfiguration(PlayerFile);
-			config.set("exp",score);
-			config.save(PlayerFile);
-			return true;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return false;
-		}
+		return new File(getDataFolder()+File.separator+player.getUniqueId()+".yml");
 	}
-	public Integer getScore(Player player)
-	{
-		FileConfiguration config = YamlConfiguration.loadConfiguration(new File(getDataFolder()+File.separator+player.getUniqueId()+".yml"));
-		return config.getInt("exp");
-	}
+	
 	
 }

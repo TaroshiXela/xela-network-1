@@ -7,14 +7,23 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import me.hyperion.mngr.FileManager;
+import me.hyperion.mngr.ScoreManager;
+import me.hyperion.mngr.UIManager;
+
 public class MainClass extends FileManager implements Listener{
-	
+	FileManager FileManager;
+	ScoreManager ScoreManager;
+	UIManager UIManager;
 	@Override
 	public void onEnable()
 	{
 		//Initialize FileManager
 		initFileManager();
 		getServer().getPluginManager().registerEvents(this, this);
+		FileManager = new FileManager();
+		ScoreManager = new ScoreManager();
+		UIManager = new UIManager();
 		//Iterate
 		/*Collection<? extends Player> Players = getServer().getOnlinePlayers();
 		BukkitScheduler scheduler = getServer().getScheduler();
@@ -33,10 +42,6 @@ public class MainClass extends FileManager implements Listener{
 		
 	}
 	
-	public void refreshScore(Player player)
-	{
-		player.setLevel(getScore(player));
-	}
 	@EventHandler
 	public void onJoin(PlayerJoinEvent event)
 	{
@@ -53,16 +58,16 @@ public class MainClass extends FileManager implements Listener{
 	{
 		String command = cmd.getName();
 		if(command.equalsIgnoreCase("refreshScore") && sender instanceof Player){
-			refreshScore((Player)sender);
+			UIManager.refreshScore((Player)sender);
 		}else if(command.equalsIgnoreCase("setScore") && sender instanceof Player){
 			try{
-				setScore((Player)sender,Integer.parseInt(args[0]));
+				ScoreManager.setScore((Player)sender,Integer.parseInt(args[0]));
 			}catch(ArrayIndexOutOfBoundsException e){
 				((Player)sender).sendMessage("Sets the score of the current player");
 				((Player)sender).sendMessage("/setscore <desired score>");
 				e.printStackTrace();
 			}
-			refreshScore((Player)sender);
+			UIManager.refreshScore((Player)sender);
 		}
 		return false;
 	}
