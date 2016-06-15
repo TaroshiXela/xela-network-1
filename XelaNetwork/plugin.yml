@@ -1,0 +1,10 @@
+name: XelaNetworkCore
+main: me.hyperion.MainClass
+version: 1.0
+commands:
+   refreshScore:
+      description: DEBUG TEMP - Refreshes score
+      usage: /<command>
+   setScore:
+      description: Sets the score of the current player
+      usage: /<command> <desired score>
