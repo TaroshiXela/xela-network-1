@@ -6,26 +6,28 @@ import java.io.IOException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 
-public class FileManager extends JavaPlugin{
-	
+public class FileManager{
+	File dataFolder = new File("");
+	public FileManager(File file){
+		dataFolder = file;
+	}
 	public void initFileManager()
 	{
-		File configFolder = new File(getDataFolder(),"config.yml");
+		File configFolder = new File(dataFolder,"config.yml");
 		if(!configFolder.exists())
 		{
-			getDataFolder().mkdirs();
+			dataFolder.mkdirs();
 		}
 	}
 	public boolean checkCreated(Player player)
 	{
-		File Playerfile = new File(getDataFolder()+File.separator+player.getUniqueId()+".yml");
+		File Playerfile = new File(dataFolder+File.separator+player.getUniqueId()+".yml");
 		return Playerfile.exists();
 	}
 	public boolean createFile(Player player)
 	{
-		File Playerfile = new File(getDataFolder()+File.separator+player.getUniqueId()+".yml");
+		File Playerfile = new File(dataFolder+File.separator+player.getUniqueId()+".yml");
 		try {
 			Playerfile.createNewFile();
 			FileConfiguration config = new YamlConfiguration();
@@ -40,7 +42,7 @@ public class FileManager extends JavaPlugin{
 	}
 	public File getFile(Player player)
 	{
-		return new File(getDataFolder()+File.separator+player.getUniqueId()+".yml");
+		return new File(dataFolder+File.separator+player.getUniqueId()+".yml");
 	}
 	
 	

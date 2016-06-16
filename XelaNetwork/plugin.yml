@@ -1,6 +1,6 @@
 name: XelaNetworkCore
 main: me.hyperion.MainClass
-version: 1.0
+version: 1.1.0
 commands:
    refreshScore:
       description: DEBUG TEMP - Refreshes score

@@ -6,12 +6,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import me.hyperion.mngr.FileManager;
 import me.hyperion.mngr.ScoreManager;
 import me.hyperion.mngr.UIManager;
 
-public class MainClass extends FileManager implements Listener{
+public class MainClass extends JavaPlugin implements Listener{
 	FileManager FileManager;
 	ScoreManager ScoreManager;
 	UIManager UIManager;
@@ -19,11 +20,12 @@ public class MainClass extends FileManager implements Listener{
 	public void onEnable()
 	{
 		//Initialize FileManager
-		initFileManager();
+		
+		FileManager = new FileManager(getDataFolder());
+		ScoreManager = new ScoreManager(getDataFolder());
+		UIManager = new UIManager(getDataFolder());
+		FileManager.initFileManager();
 		getServer().getPluginManager().registerEvents(this, this);
-		FileManager = new FileManager();
-		ScoreManager = new ScoreManager();
-		UIManager = new UIManager();
 		//Iterate
 		/*Collection<? extends Player> Players = getServer().getOnlinePlayers();
 		BukkitScheduler scheduler = getServer().getScheduler();
@@ -47,11 +49,11 @@ public class MainClass extends FileManager implements Listener{
 	{
 		this.getLogger().info("Player Joined");
 		Player player = event.getPlayer();
-		Boolean Created = checkCreated(player);
+		Boolean Created = FileManager.checkCreated(player);
 		if(!Created)
 		{
 			this.getLogger().severe("Player file not created! Creating file now!");
-			createFile(player);
+			FileManager.createFile(player);
 		}
 	}
 	public boolean onCommand(CommandSender sender, Command cmd,String label, String[] args)

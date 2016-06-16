@@ -7,8 +7,12 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-public class ScoreManager{
-	FileManager FileManager = new FileManager();
+public class ScoreManager{	
+	File dataFolder = new File("");
+	public ScoreManager(File file){
+		dataFolder = file;
+	}
+	FileManager FileManager = new FileManager(dataFolder);
 	public boolean setScore(Player player,Integer score)
 	{
 		File PlayerFile = FileManager.getFile(player);
